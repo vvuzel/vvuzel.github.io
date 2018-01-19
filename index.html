@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>제주시 공영주차장</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    
+    <!-- Custom styles for this template -->
+    <link href="css/agency.min.css" rel="stylesheet">
+
+    <style>
+    @import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+    @import url(//fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+
+    .fontHanna {
+        font-family: 'Hanna', sans-serif;
+    }
+    
+    .fontNbrs {
+        font-family: 'Nanum Brush Script', cursive;
+    }
+
+
+    </style>
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top"><span class="fontHanna">제주시 공영주차장</span></a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#page-top">About</a>
+            </li>    
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#search">주차장찾기</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#intro">소개</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="masthead">
+      <div class="container">
+        <div class="intro-text">
+          <div class="intro-lead-in"><span class="fontNbrs">환영합니다<br/>공영주차장을 소개하는 페이지입니다</span></div>
+          <div class="intro-heading text-uppercase"><span class="fontHanna">제주시 공영주차장</span></div>
+          <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#search">주차장 찾으러 GO!</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Search -->
+    <section id="search">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">제주시 공영주차장 찾기</h2>
+            <h3 class="section-subheading text-muted">주차장을 찾아봅시다!</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12"> 
+            <div ng-app='angularDemo' ng-cloak>
+            <div layout="row" ng-controller="angularController as ctrl">
+              <div flex="20" layout-padding>
+                <div class="block" ng-repeat="filter in Filters">
+                  <h4 class="block sort" style="text-align: left;">{{filter.name}}</h3>
+                  <ul class="sortoptions">
+                    <li class= "left" style="list-style:none; margin:5px;" ng-repeat="option in filter.options">
+                      <input type="checkbox" ng-model="option.IsIncluded" ng-checked="option.IsIncluded"> {{option.value}}
+                      <span>({{option.count}})</span>
+                    </li>
+                    <div class="clear"></div>
+                  </ul>
+                </div>
+                <button class="btnCheck" ng-click="ctrl.toggleAll($event, true)">전부 선택</button>
+                <button class="btnCheck" ng-click="ctrl.toggleAll($event, false)">선택 해제</button>
+                <div class="btnMap right"><a href="map.html" target="_blank">전체 지도 보기</a></div>
+                </div>
+             <br/>
+             <div class="listView clear">
+                <table style="width: 100%">
+                <tr class="text-center">
+                  <th>주차장명</th>
+                  <th>주소</th>
+                  <th>운영요일</th>
+                  <th>운영시간</th>
+                  <th>요금</th>                  
+                </tr>
+                <tr ng-repeat="place in Parkinglots | dynamicFilter:Filters:this">
+                  <td>{{place.name}}</td>
+                  <td>{{place.address}}</td>
+                  <td>{{place.week}}</td>
+                  <td>{{place.time}}</td>
+                  <td>{{place.charge}}</td>
+                </tr>
+               </table>  
+             </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="bgGray" id="intro">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">소개</h2>
+            <h3 class="section-subheading text-muted">저를 소개합니다</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <div>
+              <div class="profileImg">
+                  <div class="sign left"></div>
+                  <div class="car left"></div>   
+              </div>
+              <h4 class="clear">Bu Ji-Yeon</h4>
+              <p class="text-muted">vvuzel@gmail.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <span class="copyright">Copyright &copy; 제주시 공영주차장 2017</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Contact form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/agency.min.js"></script>
+
+    <!-- 필터 참조-->
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js'></script>
+    
+    <script src="js/index.js"></script>
+
+  </body>
+
+</html>

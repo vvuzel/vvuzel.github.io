@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>주차장 지도</title>
+    
+</head>
+<body>
+<div id="map" style="width:100%;height:350px;"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6c972ad80adc0697247dea6278262d07&"></script>
+<script>
+var mapContainer = document.getElementById('map'),
+    mapOption = { 
+        center: new daum.maps.LatLng(33.476348,126.545262),
+        level: 7 
+    };
+
+var map = new daum.maps.Map(mapContainer, mapOption);
+
+
+
+if (navigator.geolocation) {
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+        
+        var lat = position.coords.latitude,
+            lon = position.coords.longitude;
+        
+        var locPosition = new daum.maps.LatLng(lat, lon),
+            message = '<div style="padding:5px;">현재 위치</div>';
+        
+        displayMarker(locPosition, message);
+            
+      });
+    
+} else {
+    
+    var locPosition = new daum.maps.LatLng(33.450701, 126.570667),    
+        message = 'geolocation을 사용할수 없어요..'
+        
+    displayMarker(locPosition, message);
+}
+
+function displayMarker(locPosition, message) {
+
+    var marker = new daum.maps.Marker({  
+        map: map, 
+        position: locPosition
+    }); 
+    
+    var iwContent = message,
+        iwRemoveable = true;
+
+    var infowindow = new daum.maps.InfoWindow({
+        content : iwContent,
+        removable : iwRemoveable
+    });
+    
+    infowindow.open(map, marker);
+    
+    map.setCenter(locPosition);      
+}    
+
+var positions = [
+    {
+        title: '탑동입구 공영주차장', 
+        latlng: new daum.maps.LatLng(33.510969042978154,126.52335155512873)
+    },
+    {
+        title: '신제주로터리', 
+        latlng: new daum.maps.LatLng(33.51503596799152,126.51196744864066)
+    },
+    {
+        title: '동문재래시장(노상) 공영주차장', 
+        latlng: new daum.maps.LatLng(33.497046939291174,126.53529094758608)
+    },
+    {
+        title: '중앙로터리', 
+        latlng: new daum.maps.LatLng(33.51831601560106,126.51982810797199)
+    },
+    {
+        title: '시청 앞 공영주차장', 
+        latlng: new daum.maps.LatLng(33.516508226419035,126.52518112077263)
+    },
+    {
+        title: '용두암 주차장', 
+        latlng: new daum.maps.LatLng(33.508406728557,126.52194925257331)
+    },
+    {
+        title: '공항입구주차장', 
+        latlng: new daum.maps.LatLng(33.49566553019458,126.5314157684806)
+    },
+    {
+        title: '탑동제2주차장', 
+        latlng: new daum.maps.LatLng(33.504836196245925,126.54193474695718)
+    },
+    {
+        title: '칠성골', 
+        latlng: new daum.maps.LatLng(33.48905631870589,126.4914881959613)
+    },
+    {
+        title: '병문주차장', 
+        latlng: new daum.maps.LatLng(33.49473175858234,126.53532053388005)
+    },
+    {
+        title: '고산동산주차장', 
+        latlng: new daum.maps.LatLng(33.5108352628843,126.52608174651736)
+    },
+    {
+        title: '신제주공영주차장', 
+        latlng: new daum.maps.LatLng(33.51354577351842,126.52663957031176)
+    },
+    {
+        title: '인제주차장', 
+        latlng: new daum.maps.LatLng(33.51412539825008,126.52637809567187)
+    },
+    {
+        title: '제일주차빌딩', 
+        latlng: new daum.maps.LatLng(33.491053391503264,126.48603607727803)
+    },
+    {
+        title: '법원 북측', 
+        latlng: new daum.maps.LatLng(33.513974651602254,126.52374407702587)
+    },
+    {
+        title: '동문재래시장', 
+        latlng: new daum.maps.LatLng(33.4967967480292,126.53493071083682)
+    },
+    {
+        title: '성신로', 
+        latlng: new daum.maps.LatLng(33.50246117744948,126.52889102223364)
+    },
+    {
+        title: '칠성상가제1', 
+        latlng: new daum.maps.LatLng(33.51154827807825,126.52864374343064)
+    },
+    {
+        title: '광양초 서측 주차장', 
+        latlng: new daum.maps.LatLng(33.51348678299287,126.52067709306438)
+    },
+    {
+        title: '칠성상가제2', 
+        latlng: new daum.maps.LatLng(33.517268909244734,126.52417379345049)
+    },
+    {
+        title: '이도2동주민센터 앞', 
+        latlng: new daum.maps.LatLng(33.505633334940335,126.46544582275497)
+    },
+    {
+        title: '동문버스주차', 
+        latlng: new daum.maps.LatLng(33.49608249446433,126.47443614407743)
+    },
+    {
+        title: '동문주차빌딩', 
+        latlng: new daum.maps.LatLng(33.50434201046741,126.46371892648986)
+    },
+    {
+        title: '관덕정서측', 
+        latlng: new daum.maps.LatLng(33.52532713756712,126.58693930240271)
+    },
+    {
+        title: '탑동제1주차장', 
+        latlng: new daum.maps.LatLng(33.52651018632986,126.58807044330506)
+    },
+    {
+        title: '도두동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.52215400399417,126.5849220899364)
+    },
+    {
+        title: '도두동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.52130665097998,126.58496488848888)
+    },
+    {
+        title: '도두동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51984069959295,126.58229380765924)
+    },
+    {
+        title: '삼양동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51216381301699,126.50432462291185)
+    },
+    {
+        title: '삼양동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.52849459658215,126.59270723897103)
+    },
+    {
+        title: '삼양동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.515758333977615,126.50587558737918)
+    },
+    {
+        title: '삼양동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.512268084910545,126.50424653465593)
+    },
+    {
+        title: '삼양동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.5177982102975,126.48779390519395)
+    },
+    {
+        title: '삼양동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.515357006783724,126.51843660244715)
+    },
+    {
+        title: '삼양동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50858681031872,126.52188799199803)
+    },
+    {
+        title: '삼양동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.5046658550316,126.53015330860961)
+    },
+    {
+        title: '삼양동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.515190180383975,126.51819642698835)
+    },
+    {
+        title: '용담이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.512268084910545,126.50424653465593)
+    },
+    {
+        title: '용담이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.515758333977615,126.50587558737918)
+    },
+    {
+        title: '용담이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51216381301699,126.50432462291185)
+    },
+    {
+        title: '용담이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.5177982102975,126.48779390519395)
+    },
+    {
+        title: '용담이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50858681031872,126.52188799199803)
+    },
+    {
+        title: '용담이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.515190180383975,126.51819642698835)
+    },
+    {
+        title: '삼도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.515357006783724,126.51843660244715)
+    },
+    {
+        title: '삼도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50839902509012,126.52651691885045)
+    },
+    {
+        title: '삼도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.5046658550316,126.53015330860961)
+    },
+    {
+        title: '삼도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50508418292584,126.53110242117447)
+    },
+    {
+        title: '이도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49674979364043,126.53299396232813)
+    },
+    {
+        title: '이도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50977031956114,126.52674623018466)
+    },
+    {
+        title: '이도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49184253664101,126.52850089722253)
+    },
+    {
+        title: '이도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49337896749755,126.52758436763403)
+    },
+    {
+        title: '이도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.491810475941584,126.5352887921197)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.498513002139845,126.54257929601907)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.489642519342624,126.53131908751028)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49628116957237,126.5368919790092)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48825431656309,126.52100982660414)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.490369938513055,126.51973707061813)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.489139801268514,126.5224425090889)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.489144919186394,126.52377243693839)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48801309798698,126.52486324215785)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.489134483911755,126.52764184818432)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49045838406697,126.52679105071645)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.509968542290075,126.51551746389718)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.5104461268595,126.5168364733091)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51072419044867,126.51600834270172)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.509477408648614,126.5162692829487)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50965349447193,126.51610901528844)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.4832067553037,126.49500842809546)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48117971862093,126.49054007726714)
+    },
+    {
+        title: '용담일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47866626086277,126.49058491448325)
+    },
+    {
+        title: '용담일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.479920982778566,126.4913909510894)
+    },
+    {
+        title: '용담일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.478362306626266,126.49033708911311)
+    },
+    {
+        title: '용담일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47778273323187,126.48971647613165)
+    },
+    {
+        title: '용담일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.493571852355416,126.4872005689071)
+    },
+    {
+        title: '연동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.493379937550856,126.4852733896788)
+    },
+    {
+        title: '연동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50002100504856,126.54566637766138)
+    },
+    {
+        title: '연동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.5047684296555,126.53439732660642)
+    },
+    {
+        title: '연동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.479920982778566,126.4913909510894)
+    },
+    {
+        title: '연동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.493379937550856,126.4852733896788)
+    },
+    {
+        title: '연동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.493571852355416,126.4872005689071)
+    },
+    {
+        title: '연동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.478362306626266,126.49033708911311)
+    },
+    {
+        title: '연동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47778273323187,126.48971647613165)
+    },
+    {
+        title: '연동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50002100504856,126.54566637766138)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.5047684296555,126.53439732660642)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49060172688553,126.4282129048476)
+    },
+    {
+        title: '외도동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.4917527190845,126.42990118208783)
+    },
+    {
+        title: '외도동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49154123887251,126.43175335597135)
+    },
+    {
+        title: '외도동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48767867413822,126.42936405807876)
+    },
+    {
+        title: '외도동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.487824528709616,126.42971172338252)
+    },
+    {
+        title: '외도동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.486858946383954,126.42912841423892)
+    },
+    {
+        title: '외도동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.488427868211815,126.43309071611299)
+    },
+    {
+        title: '외도동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.485629410672495,126.42839621610494)
+    },
+    {
+        title: '외도동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49280411739598,126.43268342687155)
+    },
+    {
+        title: '외도동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.482393414835855,126.48403865668026)
+    },
+    {
+        title: '외도동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47785293159374,126.47971043596819)
+    },
+    {
+        title: '외도동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.478867019075516,126.47987651588754)
+    },
+    {
+        title: '외도동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.487386403118514,126.48014839212571)
+    },
+    {
+        title: '외도동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48886808454863,126.48260575424227)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.4600430741657,126.45994738599565)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.45557038971442,126.45894254214988)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48416153787532,126.47143953993493)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48250454174244,126.47189288756466)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.483871477336095,126.47446686658142)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.485820908620305,126.47493712851323)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.449957572761456,126.44882441973353)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.45151983727354,126.44898232220048)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.4819417245416,126.47184035489092)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51546593991283,126.5424169061756)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51629112931353,126.53545501555728)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.497068405185644,126.45227092471622)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.52009188346293,126.57345748970967)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.524508942686865,126.56597811546845)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.512910323326764,126.53501672811522)
+    },
+    {
+        title: '건입동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49049211699918,126.49512970068767)
+    },
+    {
+        title: '건입동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.52231248681502,126.56285021930809)
+    },
+    {
+        title: '건입동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51629112931353,126.53545501555728)
+    },
+    {
+        title: '이호동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.52009188346293,126.57345748970967)
+    },
+    {
+        title: '이호동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.524508942686865,126.56597811546845)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49049211699918,126.49512970068767)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.497068405185644,126.45227092471622)
+    },
+    {
+        title: '연동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.512910323326764,126.53501672811522)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51415363409589,126.56249516786946)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.522179586599044,126.56505110562078)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.52231248681502,126.56285021930809)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.501376060861254,126.5196031179572)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.499700565524634,126.51627201476936)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.469561563551416,126.49092649696583)
+    },
+    {
+        title: '삼도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48820242703128,126.49610278178976)
+    },
+    {
+        title: '삼도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48375315580761,126.4972346210511)
+    },
+    {
+        title: '삼양동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49752796540706,126.5158708684218)
+    },
+    {
+        title: '연동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51190005788568,126.53874612516158)
+    },
+    {
+        title: '연동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.44000681081275,126.46013177960212)
+    },
+    {
+        title: '연동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.519278168925155,126.56451020941671)
+    },
+    {
+        title: '오라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49776646554743,126.54257461323614)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.46592121408384,126.5129915919895)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49948224531908,126.5443003353052)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48749974233431,126.53307374407771)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51604618053263,126.53074621853216)
+    },
+    {
+        title: '봉개동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.488406225226186,126.5343730007035)
+    },
+    {
+        title: '건입동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51064345950118,126.54416434494873)
+    },
+    {
+        title: '오라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48878360292561,126.53307115822624)
+    },
+    {
+        title: '건입동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.486934525836965,126.53525457988827)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48885255440038,126.53606640897804)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49024242763255,126.53548224522596)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.4865648785266,126.53766676071179)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49171290723909,126.53813008194122)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49117559088568,126.54105116115728)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48893388893364,126.5404733304402)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48910999143223,126.54030884578412)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49043919863713,126.54281543631602)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49059355517412,126.54262093882701)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.492922477228575,126.54142932821074)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.491977280706806,126.54231667351925)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49171290723909,126.53813008194122)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48893388893364,126.5404733304402)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48910999143223,126.54030884578412)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49059355517412,126.54262093882701)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49117559088568,126.54105116115728)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49043919863713,126.54281543631602)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.492922477228575,126.54142932821074)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.491977280706806,126.54231667351925)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.493561037349394,126.54246759962913)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49269855644048,126.54329424667687)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.494593155823914,126.54265586618331)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49478240719523,126.5450825237037)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49399819053288,126.54562035936672)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50486774697272,126.5105737962116)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51000494564967,126.53059371095014)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49439776801932,126.54739165615591)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50412814521677,126.51600631651827)
+    },
+    {
+        title: '용담이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51485172047041,126.53436915235436)
+    },
+    {
+        title: '삼도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.5230827102834,126.56446100233686)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.525014944501535,126.56424033005655)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.52283693049208,126.58639569898519)
+    },
+    {
+        title: '삼양동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50836097687447,126.5612414226069)
+    },
+    {
+        title: '건입동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.4791848750445,126.48171654052202)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48960920373769,126.51240280378273)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.5165817373008,126.517142495612)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49946212661741,126.54668087372576)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49837041993354,126.52670065739235)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.497395766448086,126.52551362203437)
+    },
+    {
+        title: '오라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49908946950096,126.54832715900574)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.507406899484,126.5254762143994)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50630020484711,126.51258904110472)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.500069906017,126.54720286824559)
+    },
+    {
+        title: '삼도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.512152466901114,126.53391864918547)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50781833023494,126.52649855635933)
+    },
+    {
+        title: '용담이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50056060738712,126.49678449693269)
+    },
+    {
+        title: '이도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.5155773607304,126.53265603086378)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.523438188425246,126.56607388520382)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50004811504946,126.53836561974221)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49614335775886,126.53668610087476)
+    },
+    {
+        title: '이도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51035482105521,126.53060904224586)
+    },
+    {
+        title: '용담일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50630020484711,126.51258904110472)
+    },
+    {
+        title: '건입동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.5155773607304,126.53265603086378)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50004811504946,126.53836561974221)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50056060738712,126.49678449693269)
+    },
+    {
+        title: '용담이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.523438188425246,126.56607388520382)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.500069906017,126.54720286824559)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50263692184439,126.50460277972829)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51035482105521,126.53060904224586)
+    },
+    {
+        title: '이도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.484163222419895,126.4786484041693)
+    },
+    {
+        title: '용담이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49614335775886,126.53668610087476)
+    },
+    {
+        title: '삼도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48161805088715,126.47544880254362)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50426027524995,126.51752087456133)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.477902083325155,126.47682249575298)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.483300936014565,126.4768502931499)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47355684466658,126.54062767127718)
+    },
+    {
+        title: '노형동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.480536809580705,126.47731448610469)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47522064717333,126.54389806739107)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47633405881504,126.54070769115701)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47533763365309,126.54629444098227)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47180629708198,126.54023670944112)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47526957005608,126.54839484719044)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.473780619949395,126.54458553512383)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.4738128314068,126.54945241253887)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.476803681111726,126.54778870715475)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47133023855596,126.54708989957652)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47425168140473,126.55013437144247)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47029372998698,126.54668649332575)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47119703684848,126.54029586818815)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47291677361387,126.54899229695215)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47235316321825,126.55069929997806)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47220266530482,126.54405158240465)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47118891833211,126.54297679286198)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.470338593582134,126.54416892287948)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.469503005109594,126.54250799847759)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51357116560648,126.53911181686935)
+    },
+    {
+        title: '아라동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.47636177577448,126.54529070543961)
+    },
+    {
+        title: '이도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.4844974400303,126.60743878661164)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51444420870078,126.53919329410729)
+    },
+    {
+        title: '건입동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50145902221317,126.51960696434107)
+    },
+    {
+        title: '봉개동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.516073356176236,126.53604601941805)
+    },
+    {
+        title: '건입동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49021607172986,126.6128189814139)
+    },
+    {
+        title: '용담일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.514538884901306,126.53943819574043)
+    },
+    {
+        title: '건입동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.511900767150806,126.56077151101329)
+    },
+    {
+        title: '삼도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50292605331688,126.46821318942992)
+    },
+    {
+        title: '용담일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51191934807547,126.56092640435855)
+    },
+    {
+        title: '건입동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50145902221317,126.51960696434107)
+    },
+    {
+        title: '삼도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.514538884901306,126.53943819574043)
+    },
+    {
+        title: '이도일동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49021607172986,126.6128189814139)
+    },
+    {
+        title: '봉개동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.51191934807547,126.56092640435855)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.49005132254542,126.61318556559695)
+    },
+    {
+        title: '화북동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.511900767150806,126.56077151101329)
+    },
+    {
+        title: '봉개동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.50292605331688,126.46821318942992)
+    },
+    {
+        title: '도두동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.55781078299933,126.74866048411728)
+    },
+    {
+        title: '건입동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.5259987071883,126.8573827502546)
+    },
+    {
+        title: '일도이동 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.52478176342006,126.85294107713038)
+    },
+    {
+        title: '구좌읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.527514907054886,126.85557603984749)
+    },
+    {
+        title: '구좌읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.558426297768385,126.76268405533409)
+    },
+    {
+        title: '구좌읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.52830852986034,126.76985842157265)
+    },
+    {
+        title: '구좌읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.491642405691344,126.8104066697604)
+    },
+    {
+        title: '구좌읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.52411646720171,126.86406421284171)
+    },
+    {
+        title: '구좌읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.46510603166103,126.31662289508776)
+    },
+    {
+        title: '구좌읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.45243479255828,126.40881957322601)
+    },
+    {
+        title: '구좌읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.38237691475002,126.21608762821576)
+    },
+    {
+        title: '구좌읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.498545266027726,126.9676940642696)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.541117895976,126.63587828522577)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.538300430524814,126.66762058781809)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.541305569583656,126.66935329003836)
+    },
+    {
+        title: '한림읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.96235145249127,126.29772879216397)
+    },
+    {
+        title: '한림읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.94522313540235,126.32751256214878)
+    },
+    {
+        title: '우도면 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.54241514443753,126.66622237621145)
+    },
+    {
+        title: '우도면 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.34947248738404,126.1847261471906)
+    },
+    {
+        title: '우도면 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.54164638291354,126.64274093357012)
+    },
+    {
+        title: '조천읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.420790345007035,126.27332330628155)
+    },
+    {
+        title: '조천읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.38802362531559,126.61834555103889)
+    },
+    {
+        title: '조천읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.470002682219466,126.34112911916286)
+    },
+    {
+        title: '조천읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.41120555408894,126.26856548193159)
+    },
+    {
+        title: '조천읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.486223887820586,126.41973718193668)
+    },
+    {
+        title: '추자면 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48601986200692,126.41929524271225)
+    },
+    {
+        title: '추자면 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.94522313540235,126.32751256214878)
+    },
+    {
+        title: '한경면 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.34947248738404,126.1847261471906)
+    },
+    {
+        title: '우도면 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.54164638291354,126.64274093357012)
+    },
+    {
+        title: '조천읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.420790345007035,126.27332330628155)
+    },
+    {
+        title: '조천읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.38802362531559,126.61834555103889)
+    },
+    {
+        title: '한경면 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.41120555408894,126.26856548193159)
+    },
+    {
+        title: '한림읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.486223887820586,126.41973718193668)
+    },
+    {
+        title: '조천읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.470002682219466,126.34112911916286)
+    },
+    {
+        title: '한림읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48601986200692,126.41929524271225)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48634044017114,126.41614265068203)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48615009366799,126.41401780786899)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48494432873726,126.41299300937806)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48372825220485,126.41283766953914)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.482067305354114,126.41317165241206)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.481483011400236,126.41392012469782)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48366146438811,126.41396570611711)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48122570150546,126.41441677643395)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.48322972519299,126.41494556303833)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.483682089256945,126.41527821539572)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.484470869735766,126.41659418303429)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.41572151779374,126.26565068407184)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.4843971436689,126.41702075357462)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.41300768247295,126.26229785001813)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.538882742708374,126.63737772476891)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.54049106388793,126.67363288384215)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.53903106842326,126.63753644813184)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.54247548268741,126.67261334180934)
+    },
+    {
+        title: '애월읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.544824107155435,126.6621991288891)
+    },
+    {
+        title: '한림읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.54257973609891,126.67248805318759)
+    },
+    {
+        title: '한림읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.54221911255345,126.81314306719706)
+    },
+    {
+        title: '조천읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.55635912160363,126.7530927346484)
+    },
+    {
+        title: '조천읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.544824107155435,126.6621991288891)
+    },
+    {
+        title: '조천읍 무료 주차장', 
+        latlng: new daum.maps.LatLng(33.52449396196919,126.85662308146685)
+    },
+
+];
+
+
+var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+    
+for (var i = 0; i < positions.length; i ++) {
+    
+    var imageSize = new daum.maps.Size(24, 35); 
+    
+    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize); 
+    
+    var marker = new daum.maps.Marker({
+        map: map,
+        position: positions[i].latlng,
+        title : positions[i].title,
+        image : markerImage
+    });
+}
+</script>
+</body>
+</html>
